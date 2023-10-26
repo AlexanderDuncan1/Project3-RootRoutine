@@ -1,0 +1,15 @@
+.App {
+    text-align: center;
+  }
+  
+  .plant-list {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .plant-item {
+    border: 1px solid gray;
+    margin: 10px;
+    padding: 10px;
+  }
+  
