@@ -1,15 +1,10 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const plantSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-  },
-  ownerId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true,
-  },
+const plantSchema = new Schema({
+  name: String,
+  type: String
 });
 
-module.exports = mongoose.model('Plant', plantSchema);
+const Plant = mongoose.model('Plant', plantSchema);
+module.exports = Plant;

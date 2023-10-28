@@ -7,11 +7,16 @@ const resolvers = require('./graphql/resolvers');
 const app = express();
 const PORT = 4000;
 
-mongoose.connect('YOUR_MONGODB_CONNECTION_STRING', {
+mongoose.connect('mongodb://127.0.0.1:27017/RootRoutineDB', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-}).then(() => {
+})
+
+.then(() => {
   console.log('Connected to MongoDB');
+})
+.catch(err => {
+  console.error('MongoDB connection error:', err);
 });
 
 const server = new ApolloServer({

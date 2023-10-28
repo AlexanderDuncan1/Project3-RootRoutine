@@ -17,7 +17,11 @@ const typeDefs = gql`
     plants: [Plant!]!
   }
 
-  # ... Add mutations and other type definitions as needed.
+  type Mutation {
+    addPlant(name: String!, ownerId: ID!): Plant
+    updatePlant(id: ID!, name: String): Plant
+    deletePlant(id: ID!): Plant
+  }
 `;
 
 module.exports = typeDefs;
