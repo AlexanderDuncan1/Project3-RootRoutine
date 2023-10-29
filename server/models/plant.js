@@ -3,7 +3,11 @@ const Schema = mongoose.Schema;
 
 const plantSchema = new Schema({
   name: String,
-  type: String
+  type: String,
+  owner: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  }
 });
 
 const Plant = mongoose.model('Plant', plantSchema);
