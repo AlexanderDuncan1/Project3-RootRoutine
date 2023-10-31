@@ -4,7 +4,8 @@ const typeDefs = gql`
   type User {
     id: ID!
     username: String!
-    password: String! # For a real-world app, never store plain-text passwords!
+    email: String!
+    token: String
   }
 
   type Plant {
@@ -21,6 +22,8 @@ const typeDefs = gql`
     addPlant(name: String!, ownerId: ID!): Plant
     updatePlant(id: ID!, name: String): Plant
     deletePlant(id: ID!): Plant
+    register(username: String!, email: String!, password: String!): User
+    login(email: String!, password: String!): User
   }
 `;
 

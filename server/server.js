@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const mongoose = require('mongoose');
 const { ApolloServer } = require('apollo-server-express');
@@ -5,13 +7,12 @@ const typeDefs = require('./graphQL/typeDefs');
 const resolvers = require('./graphQL/resolvers');
 
 const app = express();
-const PORT = 4000;
+const PORT = process.env.PORT || 4000; 
 
-mongoose.connect('mongodb://127.0.0.1:27017/RootRoutineDB', {
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/RootRoutineDB', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
-
 .then(() => {
   console.log('Connected to MongoDB');
 })
@@ -27,6 +28,8 @@ const server = new ApolloServer({
 async function startServer() {
   await server.start();
   server.applyMiddleware({ app });
+
+  app.use(express.json());
 
   app.listen(PORT, () => {
     console.log(`Server is running at http://localhost:${PORT}${server.graphqlPath}`);

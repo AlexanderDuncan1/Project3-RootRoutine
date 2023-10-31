@@ -1,12 +1,10 @@
 import React from 'react';
-import './App.css';
-import Home from './pages/Home';
+import SignupForm from './components/signupModal';
 
 function App() {
   return (
     <div className="App">
-      <Home />
-      {/*add routes or additional components*/}
+      <SignupForm />
     </div>
   );
 }
