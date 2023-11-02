@@ -5,8 +5,8 @@
     "description": "Client side of the application",
     "dependencies": {
         "@apollo/client": "^3.3.20",
+        "axios": "^1.6.0",
         "bootstrap": "^5.3.2",
-        "dotenv": "^16.3.1",
         "react": "^17.0.2",
         "react-bootstrap": "^2.9.1",
         "react-dom": "^17.0.2",
@@ -26,6 +26,11 @@
         ]
     },
     "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
         "development": [
             "last 1 chrome version",
             "last 1 firefox version",
