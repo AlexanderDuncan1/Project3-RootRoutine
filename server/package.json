@@ -5,7 +5,8 @@
     "main": "server.js",
     "scripts": {
         "start": "node server.js",
-        "dev": "nodemon server.js"
+        "dev": "nodemon server.js",
+        "heroku-start": "NODE_ENV=production node server.js"
     },
     "dependencies": {
         "apollo-server-express": "^3.12.1",
