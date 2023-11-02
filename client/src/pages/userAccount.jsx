@@ -18,7 +18,7 @@ function UserAccount() {
             <Row className="welcome-header justify-content-center align-items-center">
                 <Col className="text-center">
                 <h2>{greeting}</h2>
-                    <p>Welcome to your Root Routine</p>
+                    <p></p>
                 </Col>
             </Row>
 
