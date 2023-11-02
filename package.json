@@ -2,7 +2,6 @@
     "name": "project3-rootroutine",
     "version": "1.0.0",
     "description": "Grow your Ideas",
-    "main": "index.js",
     "scripts": {
         "start": "concurrently \"npm run server\" \"npm run client\"",
         "server": "nodemon server/server.js",
@@ -12,19 +11,5 @@
     "dependencies": {
         "concurrently": "^7.0.0",
         "react-router-dom": "^6.17.0"
-    },
-    "devDependencies": {
-        "@babel/plugin-proposal-private-property-in-object": "^7.22.0",
-        "@babel/preset-env": "^7.24.0",
-        "@babel/preset-react": "^7.24.0"
-    },
-    "babel": {
-        "presets": [
-            "@babel/preset-env",
-            "@babel/preset-react"
-        ],
-        "plugins": [
-            "@babel/plugin-proposal-private-property-in-object"
-        ]
     }
 }
