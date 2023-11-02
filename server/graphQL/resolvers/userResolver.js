@@ -4,13 +4,20 @@ const { User } = require('../../models');
 
 const userResolver = {
   Mutation: {
-    register: async (_, { username, email, password }) => {
+    signup: async (_, { username, email, password }) => {
       try {
-        const existingUser = await User.findOne({ email });
-        if (existingUser) {
-          throw new Error('User already exists');
+        const existingUserByUsername = await User.findOne({ username });
+        if (existingUserByUsername) {
+          throw new Error('Username already exists');
         }
-        const hashedPassword = await bcrypt.hash(password, 12);        
+
+        const existingUserByEmail = await User.findOne({ email });
+        if (existingUserByEmail) {
+          throw new Error('Email already exists');
+        }
+
+        console.log("Password to hash:", password);
+        const hashedPassword = await bcrypt.hash(password, 12);
 
         const newUser = new User({
           username,
@@ -19,13 +26,14 @@ const userResolver = {
         });
 
         const result = await newUser.save();
+
         const token = jwt.sign(
           { userId: result.id, email: result.email },
           process.env.JWT_SECRET,
           { expiresIn: '1h' }
         );
 
-        return { ...result._doc, id: result.id, token };
+        return { userId: result.id, token, tokenExpiration: 1 };
       } catch (error) {
         console.error(error);
         throw new Error('Error registering user');
@@ -46,11 +54,11 @@ const userResolver = {
 
         const token = jwt.sign(
           { userId: user.id, email: user.email },
-          process.env.JWT_SECRET,//evn variablt
+          process.env.JWT_SECRET,
           { expiresIn: '1h' }
         );
 
-        return { ...user._doc, id: user.id, token };
+        return { userId: user.id, token, tokenExpiration: 1 };
       } catch (error) {
         console.error(error);
         throw new Error('Error logging in');
@@ -60,4 +68,3 @@ const userResolver = {
 };
 
 module.exports = userResolver;
-

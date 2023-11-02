@@ -5,7 +5,11 @@ const typeDefs = gql`
     id: ID!
     username: String!
     email: String!
-    token: String
+  }
+
+  type PlantSearchResult {
+    name: String
+    type: String
   }
 
   type Plant {
@@ -14,16 +18,38 @@ const typeDefs = gql`
     owner: User!
   }
 
+  type AuthData {
+    userId: ID!
+    token: String!
+    tokenExpiration: Int!
+  }
+
+  type PlantResponse {
+    success: Boolean!
+    message: String
+    plant: Plant
+  }
+
+  input PlantInput {
+    name: String!
+    type: String!
+  }
+
   type Query {
     plants: [Plant!]!
+    searchPlant(query: String!): [PlantSearchResult]!
+    getUserPlants(userId: ID!): [Plant]!
+    user(id: ID!): User
+    plant(id: ID!): Plant
   }
 
   type Mutation {
+    signup(username: String!, email: String!, password: String!): AuthData!
+    login(email: String!, password: String!): AuthData!
     addPlant(name: String!, ownerId: ID!): Plant
+    savePlant(userId: ID!, plantInput: PlantInput!): PlantResponse!
     updatePlant(id: ID!, name: String): Plant
-    deletePlant(id: ID!): Plant
-    register(username: String!, email: String!, password: String!): User
-    login(email: String!, password: String!): User
+    deletePlant(id: ID!): PlantResponse
   }
 `;
 
