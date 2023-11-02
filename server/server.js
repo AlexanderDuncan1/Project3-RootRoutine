@@ -1,7 +1,4 @@
-if (process.env.NODE_ENV !== 'production') {
-    require('dotenv').config();
-}
-
+require('dotenv').config();
 console.log('The PORT is:', process.env.PORT);
 const express = require('express');
 const mongoose = require('mongoose');
@@ -9,6 +6,7 @@ const { ApolloServer } = require('apollo-server-express');
 const typeDefs = require('./graphQL/typeDefs');
 const resolvers = require('./graphQL/resolvers');
 const cors = require('cors');
+const path = require('path');
 
 const app = express();
 app.use(cors());
