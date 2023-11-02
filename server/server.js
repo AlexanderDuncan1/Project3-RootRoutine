@@ -1,5 +1,8 @@
-require('dotenv').config();
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config();
+}
 
+console.log('The PORT is:', process.env.PORT);
 const express = require('express');
 const mongoose = require('mongoose');
 const { ApolloServer } = require('apollo-server-express');
@@ -34,6 +37,12 @@ async function startServer() {
     server.applyMiddleware({ app });
 
     app.use(express.json());
+
+    app.use(express.static(path.join(__dirname, '../client/build')));
+
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname, '../client/build/index.html'));
+    });
 
     app.listen(PORT, () => {
         console.log(`Server is running at http://localhost:${PORT}${server.graphqlPath}`);
