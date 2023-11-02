@@ -3,13 +3,10 @@
     "version": "1.0.0",
     "description": "Grow your Ideas",
     "scripts": {
-        "start": "concurrently \"npm run server\" \"npm run client\"",
-        "server": "nodemon server/server.js",
-        "client": "cd client && npm start",
+        "start": "node server/server.js",
         "heroku-postbuild": "cd client && npm install && npm run build"
     },
     "dependencies": {
-        "concurrently": "^7.0.0",
         "react-router-dom": "^6.17.0"
     },
     "engines": {
