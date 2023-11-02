@@ -3,6 +3,7 @@ console.log('The PORT is:', process.env.PORT);
 const express = require('express');
 const mongoose = require('mongoose');
 const { ApolloServer } = require('apollo-server-express');
+const { InMemoryLRUCache } = require('apollo-server-caching');
 const typeDefs = require('./graphQL/typeDefs');
 const resolvers = require('./graphQL/resolvers');
 const cors = require('cors');
@@ -28,11 +29,16 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/RootRouti
 const server = new ApolloServer({
     typeDefs,
     resolvers,
+    persistedQueries: {
+        cache: new InMemoryLRUCache({
+          maxSize: 1000,
+        }),
+    },
 });
 
 async function startServer() {
     await server.start();
-    server.applyMiddleware({ app });
+    server.applyMiddleware({ app, path: '/graphql' });
 
     app.use(express.json());
 
