@@ -21,8 +21,9 @@ const typeDefs = gql`
   type AuthData {
     userId: ID!
     token: String!
-    tokenExpiration: Int!
-  }
+    email: String!
+}
+
 
   type PlantResponse {
     success: Boolean!

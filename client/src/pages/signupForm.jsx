@@ -8,11 +8,10 @@ export const SIGNUP_USER = gql`
         signup(username: $username, email: $email, password: $password) {
             userId
             token
-            tokenExpiration
+            email
         }
     }
 `;
-
 
 function SignupForm() {
   const navigate = useNavigate();
@@ -28,7 +27,7 @@ function SignupForm() {
   const [signupUser, { loading, error }] = useMutation(SIGNUP_USER, {
     onCompleted: (data) => {
       console.log('Signup successful', data);
-      login(data);
+      login(data.signup);
       navigate('/account'); 
     },
     onError: (error) => {

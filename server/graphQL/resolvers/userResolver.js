@@ -16,8 +16,9 @@ const userResolver = {
           throw new Error('Email already exists');
         }
 
-        console.log("Password to hash:", password);
-        const hashedPassword = await bcrypt.hash(password, 12);
+        const saltRounds = parseInt(process.env.BCRYPT_SALT_ROUNDS) || 12;
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
+        
 
         const newUser = new User({
           username,
@@ -33,7 +34,12 @@ const userResolver = {
           { expiresIn: '1h' }
         );
 
-        return { userId: result.id, token, tokenExpiration: 1 };
+        return {
+          userId: result.id,
+          token,
+          email: result.email,
+          tokenExpiration: 1
+        };
       } catch (error) {
         console.error(error);
         throw new Error('Error registering user');
@@ -58,13 +64,18 @@ const userResolver = {
           { expiresIn: '1h' }
         );
 
-        return { userId: user.id, token, tokenExpiration: 1 };
+        return {
+          userId: user.id,
+          token,
+          email: user.email,
+          tokenExpiration: 1
+        };
       } catch (error) {
         console.error(error);
         throw new Error('Error logging in');
       }
-    },
-  },
+    }
+  }
 };
 
 module.exports = userResolver;

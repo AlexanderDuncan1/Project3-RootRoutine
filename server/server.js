@@ -10,11 +10,12 @@ const cors = require('cors');
 const app = express();
 app.use(cors());
 
-const PORT = process.env.PORT || 4000; 
+const PORT = process.env.PORT || 4000;
 
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/RootRoutineDB', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    useCreateIndex: true
 })
 .then(() => {
     console.log('Connected to MongoDB');

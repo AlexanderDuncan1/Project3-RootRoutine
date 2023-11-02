@@ -1,78 +1,79 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { AuthContext } from '../Auth.jsx';
 import { Navigate } from 'react-router-dom';
-import PlantModal from '../components/addplantModal';
-import { useQuery } from '@apollo/client';
-import gql from 'graphql-tag';
-
-const GET_USER_PLANTS = gql`
-  query GetUserPlants($userId: ID!) {
-    userPlants(userId: $userId) {
-      id
-      name
-      owner {
-        id
-        username
-      }
-    }
-  }
-`;
+import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 
 function UserAccount() {
-  const { isLoggedIn, currentUser } = useContext(AuthContext);
-  const [userPlants, setUserPlants] = useState([]);
-  const [modalShow, setModalShow] = useState(false);
-  const [selectedPlant, setSelectedPlant] = useState(null);
+    const { isLoggedIn, currentUser } = useContext(AuthContext);
 
-  const { loading, error, data } = useQuery(GET_USER_PLANTS, {
-    variables: { userId: currentUser?.id },
-    skip: !currentUser,
-  });
-
-  useEffect(() => {
-    if (data) {
-      setUserPlants(data.userPlants);
+    if (!isLoggedIn) {
+        return <Navigate to="/" />;
     }
-  }, [data]);
+    const greeting = currentUser && currentUser.id 
+        ? `Hello User ${currentUser.id}` 
+        : 'Hello Guest';
+    return (
+        <Container>
+            <div className="background-image"></div>
+            <Row className="welcome-header justify-content-center align-items-center">
+                <Col className="text-center">
+                <h2>{greeting}</h2>
+                    <p>Welcome to your Root Routine</p>
+                </Col>
+            </Row>
 
-  if (!isLoggedIn) {
-    return <Navigate to="/" />;
-  }
+            <Row>
+    <Col>
+        <Card className="outer-weather-card">
+            <Card.Body>
+                <Card.Title>Weather Information</Card.Title>
+                <div className="weather-card-container">
+                    {["Mon", "Tues", "Wed", "Thurs", "Fri", "Satur", "Sun"].map(day => (
+                        <Card key={day} className="day-card">
+                            <Card.Body>
+                                <Card.Title>{day}</Card.Title>
+                                <Card.Text>
+                                
+                                </Card.Text>
+                            </Card.Body>
+                        </Card>
+                    ))}
+                </div>
+            </Card.Body>
+        </Card>
+    </Col>
+</Row>
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error fetching user's plants: {error.message}</p>;
+            <Row>
+                <Col md={6}>
+                    <Card className="plant-button-card">
+                        <Card.Body>
+                            <Button variant="primary" size="lg" block>
+                                Add A Plant
+                            </Button>
+                            <Card.Title style={{ marginTop: '20px' }}>Your Plants</Card.Title>
+                            <Card.Text>
+                                - Plant A <br />
+                                - Plant B <br />
+                                (More plants will be listed here)
+                            </Card.Text>
+                        </Card.Body>
+                    </Card>
+                </Col>
 
-  const handlePlantSelection = (plant) => {
-    setSelectedPlant(plant);
-    setModalShow(false);
-  };
-
-  return (
-    <div className="account-page">
-      <h1>User Account</h1>
-      <button onClick={() => setModalShow(true)}>Add A Plant</button>
-      <PlantModal
-        show={modalShow}
-        onHide={() => setModalShow(false)}
-        onSelect={handlePlantSelection}
-      />
-      <div className="plants-list">
-        {userPlants.map(plant => (
-          <div key={plant.id} className="plant-card">
-            <h2>{plant.name}</h2>
-            <p>Owner: {plant.owner.username}</p>
-          </div>
-        ))}
-      </div>
-      {selectedPlant && (
-        <div className="selected-plant-info">
-          <h2>Plant Information</h2>
-          <p>Name: {selectedPlant.name}</p>
-          <p>Owner: {selectedPlant.owner.username}</p>
-        </div>
-      )}
-    </div>
-  );
+                <Col md={6}>
+                    <Card className="info-card">
+                        <Card.Body>
+                            <Card.Title>Plant Care Info</Card.Title>
+                            <Card.Text>
+                                Care instructions and details for your selected plant will be displayed here.
+                            </Card.Text>
+                        </Card.Body>
+                    </Card>
+                </Col>
+            </Row>
+        </Container>
+    );
 }
 
 export default UserAccount;

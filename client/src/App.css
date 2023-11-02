@@ -7,16 +7,91 @@
   flex-wrap: wrap;
 }
 
-.plant-item {
-  border: 1px solid gray;
-  margin: 10px;
-  padding: 10px;
-}
-
 .home-page {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 100vh;
+}
+
+.welcome-header {
+  background-color: #FFD700;
+  padding: 20px 0;
+  border-radius: 8px;
+  text-align: left;
+}
+
+.weather-card {
+  background-color: #FFA500 !important;
+  margin-top: 20px;
+  border-radius: 8px;
+  padding: 20px;
+  color: #fff;
+}
+
+.plant-button-card {
+  background-color: #FF69B4 !important;
+  margin-top: 20px;
+  border-radius: 8px;
+  padding: 20px;
+  color: #fff;
+}
+
+.info-card {
+  background-color: #1E90FF !important;
+  margin-top: 20px;
+  border-radius: 8px;
+  padding: 20px;
+  color: #fff;
+}
+
+.background-image {
+  background-image: url('/assets/stockhomeimg.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  height: 100vh;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+.weather-row {
+  overflow-x: auto;
+  white-space: nowrap;
+  gap: 5px;
+}
+
+.weather-col {
+  display: inline-block;
+}
+
+.daily-weather-card {
+  width: 120px;
+}
+
+.weather-card-container {
+  display: flex;
+  height: 150px;
+  overflow-x: auto;
+  gap: 15px;
+  scrollbar-width: thin;
+}
+
+.day-card {
+  flex: 0 0 auto;
+  width: 150px;
+  height: 200px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.outer-weather-card {
+  background-color: orange !important;
+  padding: 20px; 
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }

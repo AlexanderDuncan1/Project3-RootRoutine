@@ -7,7 +7,7 @@ const LOGIN_MUTATION = gql`
   mutation Login($email: String!, $password: String!) {
     login(email: $email, password: $password) {
       token
-      id
+      userId
     }
   }
 `;
@@ -25,19 +25,21 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  const [loginUser] = useMutation(LOGIN_MUTATION, {
-    onCompleted: (data) => {
-      if (data.login) {
-        localStorage.setItem('authToken', data.login.token);
-        localStorage.setItem('userId', data.login.id);
-        setIsLoggedIn(true);
-        setCurrentUser({ id: data.login.id });
-      }
-    },
-    onError: (error) => {
-      console.error('Login error', error);
+const [loginUser] = useMutation(LOGIN_MUTATION, {
+  onCompleted: (data) => {
+    if (data.login) {
+      localStorage.setItem('authToken', data.login.token);
+      localStorage.setItem('userId', data.login.userId);
+      setIsLoggedIn(true);
+      setCurrentUser({ id: data.login.userId });
     }
-  });
+  },
+  onError: (error) => {
+    console.error('Login error', error);
+  }
+});
+
+  
 
   const login = async (credentials) => {
     try {
